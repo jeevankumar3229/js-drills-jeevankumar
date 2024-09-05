@@ -30,5 +30,31 @@ function findAllUsers(){
     }
 }
 
+//Q2 Find all users staying in Germany.
+function findAllUsersInGermany(){
+    let arr={};
+    let status=1;
+    for (let user in users){
+        let a=users[user];
+        if(a.hasOwnProperty("nationality")){
+        for(let properties in a){
+            if(properties === 'nationality'){
+                if(a[properties].toLowerCase() === 'germany'){
+                    status=2;
+                    arr[user]=users[user];
 
-module.exports = { findAllUsers};
+                }
+            }
+        }
+        }
+    }
+    if(status === 2){
+    return arr;
+    }
+    else{
+        return "There are no users staying in Germany";
+    }
+}
+
+
+module.exports = { findAllUsers, findAllUsersInGermany};
