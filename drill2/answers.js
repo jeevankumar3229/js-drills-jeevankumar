@@ -56,5 +56,30 @@ function findAllUsersInGermany(){
     }
 }
 
+//Q3 Find all users with masters Degree.
+function findAllUsersWithMasterDegree(){
+    let arr={};
+    let status=1;
+    for (let user in users){
+        let a=users[user];
+        if(a.hasOwnProperty("qualification")){
+        for(let properties in a){
+            if(properties === 'qualification'){
+                if(a[properties].toLowerCase().includes('master')){
+                    status=2;
+                    arr[user]=users[user];
 
-module.exports = { findAllUsers, findAllUsersInGermany};
+                }
+            }
+        }
+        }
+    }
+    if(status === 2){
+    return arr;
+    }
+    else{
+        return "There are no users with Master's Degree";
+    }
+}
+
+module.exports = { findAllUsers, findAllUsersInGermany, findAllUsersWithMasterDegree};
