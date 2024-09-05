@@ -24,4 +24,28 @@ function getCarById(ID=33){
     }
 }
 
-module.exports ={getCarById};
+
+// ==== Problem #2 ====
+// The dealer needs the information on the last car in their inventory. Execute a function to find what the make and model of the last car in the inventory is?  Log the make and model into the console in the format of:
+//("Last car is a *car make goes here* *car model goes here*");
+
+function getLastCar(){
+    let len=inventory.length;
+    let obj=inventory[len-1];
+    if(obj.hasOwnProperty("car_make") && obj.hasOwnProperty("car_model")){
+        console.log("Last car is a "+obj["car_make"]+" "+obj["car_model"]);
+    }
+    else if(obj.hasOwnProperty("car_make")){
+        console.log("Last car is made by "+obj["car_make"]);
+    }
+    else if(obj.hasOwnProperty("car_model")){
+        console.log("Last car is of model "+obj["car_model"]);
+    }
+    else{
+        console.log("Last car has no property called car_model and car_make");
+    }
+       
+}
+
+
+module.exports ={getCarById, getLastCar};
