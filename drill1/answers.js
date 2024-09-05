@@ -96,4 +96,18 @@ function printAges(){
     
 }
 
-module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges};
+//    Create a function to retrieve and display the first hobby of each individual in the dataset.
+function displayFirstHobby(){
+    console.log("First hobby of each individual: ");
+     for(let i=0;i<arrayOfObjects.length;i++){
+        if(arrayOfObjects[i].hasOwnProperty("hobbies") && arrayOfObjects[i]["hobbies"].length > 0){
+         console.log(arrayOfObjects[i]["hobbies"][0]);
+        }
+        else{
+            console.log("Individual at ID "+arrayOfObjects[i].id+" has no hobby property or hobbies list is empty");
+        }
+     }
+}
+
+
+module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges,displayFirstHobby};
