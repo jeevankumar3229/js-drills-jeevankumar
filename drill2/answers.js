@@ -112,7 +112,7 @@ function findUsersOnProgrammingLanguage(language="python"){
     }
 }
 else{
-    console.log("Enter valid Programming language");
+    return "Enter valid Programming language";
 }
 }
 
