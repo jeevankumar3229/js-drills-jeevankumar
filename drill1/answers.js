@@ -82,4 +82,18 @@ function logsName(index=3){
 }
 }
 
-module.exports = {returnEmailaddress, printHobbies, displayNames, logsName};
+//    Implement a loop to access and print the ages of all individuals in the dataset.
+function printAges(){
+    console.log("Ages of all individuals: ");
+     for(let i=0;i<arrayOfObjects.length;i++){
+        if(arrayOfObjects[i].hasOwnProperty("age")){
+         console.log(arrayOfObjects[i].age);
+        }
+        else{
+            console.log("Individual at ID "+arrayOfObjects[i].id+" has no age property");
+        }
+     }
+    
+}
+
+module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges};
