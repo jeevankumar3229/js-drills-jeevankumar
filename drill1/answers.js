@@ -57,4 +57,29 @@ function displayNames(){
      }
 }
 }
-module.exports = {returnEmailaddress, printHobbies, displayNames};
+
+//    Write a function that accesses and logs the name and city of the individual at the index position 3 in the dataset.
+
+function logsName(index=3){
+    for(let i=0;i<arrayOfObjects.length;i++){
+        if(index === i){
+           if(arrayOfObjects[i].hasOwnProperty("name") && arrayOfObjects[i].hasOwnProperty("city")){
+            console.log("Name and City of Individual at specified index position: name: "+arrayOfObjects[i].name +" city: "+arrayOfObjects[i].city);
+        }
+        else{
+           if(arrayOfObjects[i].hasOwnProperty("name")){
+               console.log("Name of Individual at specified index position: name: "+arrayOfObjects[i].name);
+           }
+           else if(arrayOfObjects[i].hasOwnProperty("city")){
+               console.log("City of Individual at specified index position: city: "+arrayOfObjects[i].city);
+           }
+           else{
+           console.log("Individual at ID "+arrayOfObjects[i].id +" has no name and city property")
+           }
+        }
+    }
+    
+}
+}
+
+module.exports = {returnEmailaddress, printHobbies, displayNames, logsName};
