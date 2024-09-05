@@ -110,4 +110,28 @@ function displayFirstHobby(){
 }
 
 
-module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges,displayFirstHobby};
+//    Write a function that accesses and prints the names and email addresses of individuals aged 25.
+function printNamesAndEmails(age=25){
+    for(let i=0;i<arrayOfObjects.length;i++){
+       if(arrayOfObjects[i].hasOwnProperty("age")){
+        if(arrayOfObjects[i].age === age){
+           if(arrayOfObjects[i].hasOwnProperty("name")&& arrayOfObjects[i].hasOwnProperty("email")){
+            console.log("Name and Email of individual of specified age: name: "+arrayOfObjects[i].name +" email: "+arrayOfObjects[i].email);
+        }
+        else{
+           if(arrayOfObjects[i].hasOwnProperty("name")){
+               console.log("Name of Individual of age 25 having ID "+arrayOfObjects[i].id +" is " +arrayOfObjects[i].name);
+           }
+           else if(arrayOfObjects[i].hasOwnProperty("email")){
+               console.log("Email of Individual of age 25 having ID "+arrayOfObjects[i].id +" is " +arrayOfObjects[i].email);
+           }
+           else{
+               console.log("Individual at ID "+arrayOfObjects[i].id +" of age 25 has no name and city property")
+           }
+        }
+        }
+       }
+    }
+}
+
+module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges,displayFirstHobby, printNamesAndEmails};
