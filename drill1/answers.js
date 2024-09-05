@@ -134,4 +134,25 @@ function printNamesAndEmails(age=25){
     }
 }
 
-module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges,displayFirstHobby, printNamesAndEmails};
+//    Implement a loop to access and log the city and country of each individual in the dataset.
+function logCityAndCountry(){
+    console.log("The city and the Country of all individuals: ");
+     for(let i=0;i<arrayOfObjects.length;i++){
+        if(arrayOfObjects[i].hasOwnProperty("city") && arrayOfObjects[i].hasOwnProperty("country")){
+         console.log("city: "+arrayOfObjects[i].city+ " country: "+arrayOfObjects[i].country);
+        }
+        else{
+            if(arrayOfObjects[i].hasOwnProperty("city")){
+                console.log("city of individual with ID "+arrayOfObjects[i].id+" is "+arrayOfObjects[i].city);
+            }
+            else if(arrayOfObjects[i].hasOwnProperty("country")){
+                console.log("Country of individual with ID "+arrayOfObjects[i].id+" is "+arrayOfObjects[i].country);
+            }
+            else{
+            console.log("Individual at ID "+arrayOfObjects[i].id +" has no city and country property")
+            }
+        }
+     }
+}
+
+module.exports = {returnEmailaddress, printHobbies, displayNames, logsName, printAges,displayFirstHobby, printNamesAndEmails, logCityAndCountry};
