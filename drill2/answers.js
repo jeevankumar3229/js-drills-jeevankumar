@@ -85,7 +85,7 @@ function findAllUsersWithMasterDegree(){
 
 
 //Q4 Group users based on their Programming language mentioned in their designation.
-function findUsersOnProgrammingLanguage(language="python"){
+function findUsersOnProgrammingLanguage1(language="python"){
     if(typeof language === 'string'){
     let pl=language.toLowerCase();
     let arr={};
@@ -115,5 +115,52 @@ else{
     return "Enter valid Programming language";
 }
 }
+
+function findUsersOnProgrammingLanguage(){
+    let arr2={};
+    for(let user in users){
+        let a=users[user];
+        if(a.hasOwnProperty("desgination")){
+            for(let properties in a){
+                if (properties === 'desgination'){
+                    if(a[properties].toLowerCase().includes('python')){
+                        if(arr2.hasOwnProperty('python')){
+                            arr2['python'].push(user);
+                        }
+                        else{
+                            arr2['python']=[user];
+                        }
+                    }
+                    else if(a[properties].toLowerCase().includes('golang')){
+                        if(arr2.hasOwnProperty('golang')){
+                            arr2['golang'].push(user);
+                        }
+                        else{
+                            arr2['golang']=[user];
+                        }
+                    }
+                    else if(a[properties].toLowerCase().includes('javascript')){
+                        if(arr2.hasOwnProperty('javascript')){
+                            arr2['javascript'].push(user);
+                        }
+                        else{
+                            arr2['javascript']=[user];
+                        }
+                    }
+                    else{
+                        if(arr2.hasOwnProperty('other')){
+                            arr2['other'].push(user);
+                        }
+                        else{
+                            arr2['other']=[user];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return arr2;
+}
+
 
 module.exports = { findAllUsers, findAllUsersInGermany, findAllUsersWithMasterDegree, findUsersOnProgrammingLanguage};
