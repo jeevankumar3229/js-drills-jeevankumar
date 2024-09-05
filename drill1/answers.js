@@ -42,5 +42,19 @@ function printHobbies(age=30){
     }
 }
 
-
-module.exports = {returnEmailaddress, printHobbies};
+//   Create a function that extracts and displays the names of individuals who are students (`isStudent: true`) and live in Australia.
+function displayNames(){
+     for(let i=0;i<arrayOfObjects.length;i++){
+        if(arrayOfObjects[i].hasOwnProperty("isStudent") && arrayOfObjects[i].hasOwnProperty("country")){
+         if(arrayOfObjects[i].isStudent === true && arrayOfObjects[i].country === 'Australia'){
+            if(arrayOfObjects[i].hasOwnProperty("name")){
+             console.log("Names of the individuals who are students and live in Australia: "+arrayOfObjects[i].name);
+            }
+            else{
+                console.log("Individual who is a student and lives in Australia with ID "+arrayOfObjects[i].id+" has no name property");
+            }
+         }
+     }
+}
+}
+module.exports = {returnEmailaddress, printHobbies, displayNames};
