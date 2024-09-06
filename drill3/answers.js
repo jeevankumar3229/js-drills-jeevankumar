@@ -107,12 +107,6 @@ function getCarYears(){
         if(inventory[ob].hasOwnProperty("car_year")){
         for(let properties in inventory[ob]){
             if( properties === "car_year"){
-                for(let i=0;i<a.length;i++){
-                    if(a[i]=== inventory[ob][properties]){
-                        status=1;
-                        break;
-                    }    
-                }
                 if(status===0){
                     a.push(inventory[ob][properties])
                 }
@@ -122,7 +116,6 @@ function getCarYears(){
     }
     }
     if(a.length > 1){
-        console.log("Car Years: ");
         return a;
     }
     else{
@@ -130,4 +123,25 @@ function getCarYears(){
     }
 }
 
-module.exports ={getCarById, getLastCar, sortCarModel, getCarYears};
+// ==== Problem #5 ====
+// The car lot manager needs to find out how many cars are older than the year 2000. Using the array you just obtained from the previous problem, find out how many cars were made before the year 2000 and return the array of older cars and log its length.
+
+function getOlderCars(){
+    let b= getCarYears();
+    let a=[];
+    let count=0;
+    for(let i=0;i<b.length;i++){
+        if(b[i]<2000){
+            count++;
+            a.push(b[i]);
+        }
+    }
+    if(a.length > 1){
+        console.log("There are "+count+" cars older than year 2000 ");
+        return a;
+    }
+    else{
+        return "There are no cars with car_year older than 2000";
+    }
+}
+module.exports ={getCarById, getLastCar, sortCarModel, getCarYears, getOlderCars};

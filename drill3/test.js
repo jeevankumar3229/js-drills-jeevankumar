@@ -1,6 +1,7 @@
-const {getCarById, getLastCar, sortCarModel, getCarYears} = require('./answers.js');
+const {getCarById, getLastCar, sortCarModel, getCarYears, getOlderCars} = require('./answers.js');
 
 getCarById();
 getLastCar();
 console.log(sortCarModel());
-console.log(getCarYears())
+console.log("Car Years: "+ getCarYears())
+console.log(getOlderCars())
