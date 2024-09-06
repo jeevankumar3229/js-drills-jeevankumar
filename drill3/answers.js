@@ -144,4 +144,30 @@ function getOlderCars(){
         return "There are no cars with car_year older than 2000";
     }
 }
-module.exports ={getCarById, getLastCar, sortCarModel, getCarYears, getOlderCars};
+
+
+// ==== Problem #6 ====
+// A buyer is interested in seeing only BMW and Audi cars within the inventory.  Execute a function and return an array that only contains BMW and Audi cars.  Once you have the BMWAndAudi array, use JSON.stringify() to show the results of the array in the console.
+function getBMWAndAudiCars(){
+    let a=[];
+    for(let ob in inventory){
+        let status=0;
+        if(inventory[ob].hasOwnProperty("car_make")){
+        for(let properties in inventory[ob]){
+            if( properties === "car_make"){
+                if(inventory[ob][properties].toLowerCase() === 'bmw' | inventory[ob][properties].toLowerCase() === 'audi'){
+                    a.push(inventory[ob])
+                }
+            }
+        }
+
+    }
+    }
+    if(a.length > 1){
+        return a;
+    }
+    else{
+        return "There are no cars made by BMW and Audi listed in the inventory";
+    }
+}
+module.exports ={getCarById, getLastCar, sortCarModel, getCarYears, getOlderCars, getBMWAndAudiCars};
