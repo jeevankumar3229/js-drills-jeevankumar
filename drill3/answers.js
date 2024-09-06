@@ -86,11 +86,48 @@ function sortCarModel(){
         }
 
     }
+ }
+ if(a.length > 1){
+    console.log("Car Models :");
+    return a;
+
+ }
+ else{
+    return "There are no cars with car_models listed in the inventory";
+ }
 }
-return a;
+
+// ==== Problem #4 ====
+// The accounting team needs all the years from every car on the lot. Execute a function that will return an array from the dealer data containing only the car years and log the result in the console as it was returned.
+
+function getCarYears(){
+    let a=[];
+    for(let ob in inventory){
+        let status=0;
+        if(inventory[ob].hasOwnProperty("car_year")){
+        for(let properties in inventory[ob]){
+            if( properties === "car_year"){
+                for(let i=0;i<a.length;i++){
+                    if(a[i]=== inventory[ob][properties]){
+                        status=1;
+                        break;
+                    }    
+                }
+                if(status===0){
+                    a.push(inventory[ob][properties])
+                }
+            }
+        }
+
+    }
+    }
+    if(a.length > 1){
+        console.log("Car Years: ");
+        return a;
+    }
+    else{
+        return "There are no cars with car_year listed in the inventory";
+    }
 }
 
-
-
-
-module.exports ={getCarById, getLastCar, sortCarModel};
+module.exports ={getCarById, getLastCar, sortCarModel, getCarYears};
