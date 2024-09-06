@@ -47,5 +47,50 @@ function getLastCar(){
        
 }
 
+// ==== Problem #3 ====
+// The marketing team wants the car models listed alphabetically on the website. Execute a function to Sort all the car model names into alphabetical order and log the results in the console as it was returned.
 
-module.exports ={getCarById, getLastCar};
+function sortCarModel(){
+    let a=[];
+    for(let ob in inventory){
+        let status=0;
+        if(inventory[ob].hasOwnProperty("car_model")){
+        for(let properties in inventory[ob]){
+            if( properties === "car_model"){
+                for(let i=0;i<a.length;i++){
+                    if(a[i]=== inventory[ob][properties].toLowerCase()){
+                        status=1;
+                        break;
+                    }
+                   
+                }
+                if(status===0){
+                    if(a.length === 0){
+                        a.push(inventory[ob][properties].toLowerCase())
+                    }
+                    else{
+                        for(let j=0;j<a.length;j++){
+                            var status1=0;
+                            if(inventory[ob][properties].toLowerCase() < a[j]){
+                                status1=1;
+                                a.splice(j,0,inventory[ob][properties].toLowerCase())
+                                break;
+                            }
+                        }
+                        if(status1===0){
+                            a.push(inventory[ob][properties].toLowerCase())
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+return a;
+}
+
+
+
+
+module.exports ={getCarById, getLastCar, sortCarModel};
