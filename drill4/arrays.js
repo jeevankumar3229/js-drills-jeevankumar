@@ -109,12 +109,33 @@ function findsElement(arrayvalue){
 console.log(find(items, findsElement))
 
 
-
-function filter(elements, cb) {
-  // Do NOT use .filter, to complete this function.
+ // Do NOT use .filter, to complete this function.
   // Similar to `find` but you will return an array of all elements that passed the truth test
   // Return an empty array if no elements pass the truth test
+function filter(elements, cb) {
+  let a=[]
+  let status;
+  for(let i=0;i<elements.length;i++){
+    status=cb(elements[i])
+    if(status===true){
+      a.push(elements[i])
+    }
+    
+  }
+  return a;
 }
+function findsElement1(arrayvalue){
+  if(arrayvalue > 6){
+    return true;
+  }
+  else{
+    return false;
+  }
+  
+}
+console.log(filter(items, findsElement1))
+
+
 
 const nestedArray = [1, [2], [[3]], [[[4]]]]; // use this to test 'flatten'
 
