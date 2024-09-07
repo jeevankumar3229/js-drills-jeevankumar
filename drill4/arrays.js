@@ -37,8 +37,22 @@ each(items,print)
   // Produces a new array of values by mapping each value in list through a transformation function (iteratee).
   // Return the new array.
 function map(elements, cb) {
-  
+  if(Array.isArray(elements)){
+  let newarr=[]
+  for(let i=0;i<elements.length;i++){
+    newarr.push(cb(elements[i]))
+  }
+  return newarr;
 }
+else{
+  return "Pass an valid array object";
+}
+}
+function transform(item){
+  return item*3;
+}
+console.log(map(items, transform))
+
 
 function reduce(elements, cb, startingValue) {
   // Do NOT use .reduce to complete this function.
