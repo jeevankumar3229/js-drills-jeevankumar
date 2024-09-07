@@ -28,7 +28,6 @@ function each(elements, cb) {
 function print(value, index){
   console.log("Element at index "+index+" is "+value)
 }
-each(items,print)
 
 
 
@@ -51,7 +50,7 @@ else{
 function transform(item){
   return item*3;
 }
-console.log(map(items, transform))
+
 
 
 
@@ -79,7 +78,7 @@ function convertToSingleValue(starting_value,arrayelement){
   return starting_value + arrayelement;
 }
 
-console.log(reduce(items, convertToSingleValue,20))
+
 
 
 // Do NOT use .includes, to complete this function.
@@ -106,7 +105,7 @@ function findsElement(arrayvalue){
     return false;
   }
 }
-console.log(find(items, findsElement))
+
 
 
  // Do NOT use .filter, to complete this function.
@@ -125,7 +124,7 @@ function filter(elements, cb) {
   return a;
 }
 function findsElement1(arrayvalue){
-  if(arrayvalue > 6){
+  if(arrayvalue > 2){
     return true;
   }
   else{
@@ -133,14 +132,24 @@ function findsElement1(arrayvalue){
   }
   
 }
-console.log(filter(items, findsElement1))
 
-
-
-const nestedArray = [1, [2], [[3]], [[[4]]]]; // use this to test 'flatten'
-
-function flatten(elements) {
-  // Flattens a nested array (the nesting can be to any depth).
+// Flattens a nested array (the nesting can be to any depth).
   // Hint: You can solve this using recursion.
   // Example: flatten([1, [2], [3, [[4]]]]); => [1, 2, 3, 4];
+const nestedArray = [1, [2], [[3]], [[[4]]]]; // use this to test 'flatten'
+function flatten(elements) {
+  let a=[]
+  for(let i=0;i<elements.length;i++){
+    if(Array.isArray(elements[i])){
+      a.concat(flatten(elements[i]))
+    }
+    else{
+      a.push(elements[i])
+    }
+  }
+  return a;
 }
+
+module.exports={each, map, reduce, find, filter, flatten, print, transform, convertToSingleValue, findsElement, findsElement1};
+
+
