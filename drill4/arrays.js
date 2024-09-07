@@ -82,15 +82,33 @@ function convertToSingleValue(starting_value,arrayelement){
 console.log(reduce(items, convertToSingleValue,20))
 
 
-
-
-
-function find(elements, cb) {
-  // Do NOT use .includes, to complete this function.
+// Do NOT use .includes, to complete this function.
   // Look through each value in `elements` and pass each element to `cb`.
   // If `cb` returns `true` then return that element.
   // Return `undefined` if no elements pass the truth test.
+function find(elements, cb) {
+  let status;
+  for(let i=0;i<elements.length;i++){
+    status=cb(elements[i])
+    if(status=== true){
+      return elements[i];
+    }
+  }
+  if(status === false){
+    return undefined
+  }
 }
+function findsElement(arrayvalue){
+  if(arrayvalue > 2){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+console.log(find(items, findsElement))
+
+
 
 function filter(elements, cb) {
   // Do NOT use .filter, to complete this function.
