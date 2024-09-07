@@ -10,19 +10,34 @@ const items = [1, 2, 3, 4, 5, 5]; // use this array to test your code.
 
 */
 
-function each(elements, cb) {
-  // Do NOT use forEach to complete this function.
+// Do NOT use forEach to complete this function.
   // Iterates over a list of elements, yielding each in turn to the `cb` function.
   // This only needs to work with arrays.
   // You should also pass the index into `cb` as the second argument
   // based off http://underscorejs.org/#each
+function each(elements, cb) {
+  if(Array.isArray(elements)){
+    for(let i=0;i<elements.length;i++){
+      cb(elements[i],i);
+    }
+  }
+  else{
+    console.log("Pass an array object");
+  }
 }
+function print(value, index){
+  console.log("Element at index "+index+" is "+value)
+}
+each(items,print)
 
-function map(elements, cb) {
-  // Do NOT use .map, to complete this function.
+
+
+// Do NOT use .map, to complete this function.
   // How map works: Map calls a provided callback function once for each element in an array, in order, and functionructs a new array from the res .
   // Produces a new array of values by mapping each value in list through a transformation function (iteratee).
   // Return the new array.
+function map(elements, cb) {
+  
 }
 
 function reduce(elements, cb, startingValue) {
