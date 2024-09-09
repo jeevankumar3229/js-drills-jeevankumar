@@ -60,21 +60,24 @@ function transform(item,index,array){
   // `startingValue` should be the first argument passed to `cb` and the array element should be the second argument.
   // `startingValue` is the starting value.  If `startingValue` is undefined then make `elements[0]` the initial value.
 function reduce(elements, cb, startingValue) {
+  if(!Array.isArray(elements)){
+    return "Pass an valid array object";
+  }
   if(startingValue === undefined){
     startingValue =elements[0];
     for(let i=1;i<elements.length;i++){
-      startingValue=cb(startingValue,elements[i])
+      startingValue=cb(startingValue,elements[i],i,elements)
     }
   }
   else{
   for(let i=0;i<elements.length;i++){
-    startingValue=cb(startingValue,elements[i])
+    startingValue=cb(startingValue,elements[i],i,elements)
   }
 }
 return startingValue;
 }
 
-function convertToSingleValue(starting_value,arrayelement){
+function convertToSingleValue(starting_value,arrayelement,index, array){
   return starting_value + arrayelement;
 }
 
