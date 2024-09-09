@@ -28,10 +28,18 @@ function values(obj) {
   return arr;
 }
 
-function mapObject(obj, cb) {
-  // Like map for arrays, but for objects. Transform the value of each property in turn by passing it to the callback function.
+ // Like map for arrays, but for objects. Transform the value of each property in turn by passing it to the callback function.
   // http://underscorejs.org/#mapObject
+function mapObject(obj, cb) {
+  for(let properties in obj){
+    obj[properties]=transform(obj[properties]);
+  }
+  return obj;
 }
+function transform(item){
+  return item+3;
+}
+
 
 function pairs(obj) {
   // Convert an object into a list of [key, value] pairs.
@@ -53,4 +61,4 @@ function defaults(obj, defaultProps) {
 }
 
 
-module.exports = {keys, values}
+module.exports = {keys, values, mapObject, transform}
