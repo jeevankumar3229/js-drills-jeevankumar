@@ -1,4 +1,4 @@
-const items = [1, 2, 3, 4, 5, 5]; // use this array to test your code.
+//const items = [1, 2, 3, 4, 5, 5]; // use this array to test your code.
 /*
     Complete the following functions.
     These functions only need to work with arrays.
@@ -9,7 +9,6 @@ const items = [1, 2, 3, 4, 5, 5]; // use this array to test your code.
     You CAN use concat, push, pop, etc. but do not use the exact method that you are replicating
 
 */
-
 // Do NOT use forEach to complete this function.
   // Iterates over a list of elements, yielding each in turn to the `cb` function.
   // This only needs to work with arrays.
@@ -145,12 +144,12 @@ function findsElement1(arrayvalue,index, array){
 // Flattens a nested array (the nesting can be to any depth).
   // Hint: You can solve this using recursion.
   // Example: flatten([1, [2], [3, [[4]]]]); => [1, 2, 3, 4];
-const nestedArray = [1, [2], [[3]], [[[4]]]]; // use this to test 'flatten'
+//const nestedArray = [1, [2], [[3]], [[[4]]]]; // use this to test 'flatten'
 function flatten(elements) {
   let a=[]
   for(let i=0;i<elements.length;i++){
     if(Array.isArray(elements[i])){
-      a.concat(flatten(elements[i]))
+      a=a.concat(flatten(elements[i]))
     }
     else{
       a.push(elements[i])
@@ -159,6 +158,6 @@ function flatten(elements) {
   return a;
 }
 
-module.exports={each, map, reduce, find, filter, flatten, print, transform, convertToSingleValue, findsElement, findsElement1};
+module.exports={each, map, reduce, find, filter,flatten, print, transform, convertToSingleValue, findsElement, findsElement1};
 
 
