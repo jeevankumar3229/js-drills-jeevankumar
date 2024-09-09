@@ -17,10 +17,15 @@ function keys(obj) {
   return arr;
 }
 
-function values(obj) {
-  // Return all of the values of the object's own properties.
+// Return all of the values of the object's own properties.
   // Ignore functions
   // http://underscorejs.org/#values
+function values(obj) {
+  let arr=[];
+  for(let properties in obj){
+    arr.push(obj[properties]);
+  }
+  return arr;
 }
 
 function mapObject(obj, cb) {
@@ -48,4 +53,4 @@ function defaults(obj, defaultProps) {
 }
 
 
-module.exports = {keys}
+module.exports = {keys, values}
