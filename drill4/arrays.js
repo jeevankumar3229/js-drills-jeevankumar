@@ -39,7 +39,7 @@ function map(elements, cb) {
   if(Array.isArray(elements)){
   let newarr=[]
   for(let i=0;i<elements.length;i++){
-    newarr.push(cb(elements[i]))
+    newarr.push(cb(elements[i],i,elements))
   }
   return newarr;
 }
@@ -47,7 +47,7 @@ else{
   return "Pass an valid array object";
 }
 }
-function transform(item){
+function transform(item,index,array){
   return item*3;
 }
 
