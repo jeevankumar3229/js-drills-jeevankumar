@@ -18,14 +18,14 @@ const items = [1, 2, 3, 4, 5, 5]; // use this array to test your code.
 function each(elements, cb) {
   if(Array.isArray(elements)){
     for(let i=0;i<elements.length;i++){
-      cb(elements[i],i);
+      cb(elements[i],i,elements);
     }
   }
   else{
     console.log("Pass an array object");
   }
 }
-function print(value, index){
+function print(value, index, array){
   console.log("Element at index "+index+" is "+value)
 }
 
