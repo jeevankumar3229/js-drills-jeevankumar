@@ -40,10 +40,17 @@ function transform(item){
   return item+3;
 }
 
-
-function pairs(obj) {
-  // Convert an object into a list of [key, value] pairs.
+// Convert an object into a list of [key, value] pairs.
   // http://underscorejs.org/#pairs
+function pairs(obj) {
+  let arr=[]
+  for(let properties in obj){
+    let arr1=[]
+    arr1.push(properties)
+    arr1.push(obj[properties])
+    arr.push(arr1)
+  }
+  return arr;
 }
 
 /* STRETCH PROBLEMS */
@@ -61,4 +68,4 @@ function defaults(obj, defaultProps) {
 }
 
 
-module.exports = {keys, values, mapObject, transform}
+module.exports = {keys, values, mapObject, transform, pairs}
