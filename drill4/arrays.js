@@ -118,10 +118,13 @@ function findsElement(arrayvalue, index,array){
   // Similar to `find` but you will return an array of all elements that passed the truth test
   // Return an empty array if no elements pass the truth test
 function filter(elements, cb) {
+  if(!Array.isArray(elements)){
+    return "Pass an valid array object";
+  }
   let a=[]
   let status;
   for(let i=0;i<elements.length;i++){
-    status=cb(elements[i])
+    status=cb(elements[i],i.elements)
     if(status===true){
       a.push(elements[i])
     }
@@ -129,7 +132,7 @@ function filter(elements, cb) {
   }
   return a;
 }
-function findsElement1(arrayvalue){
+function findsElement1(arrayvalue,index, array){
   if(arrayvalue > 2){
     return true;
   }
