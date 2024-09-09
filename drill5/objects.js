@@ -1,4 +1,4 @@
-const testObject = { name: "Bruce Wayne", age: 36, location: "Gotham" }; // use this object to test your functions
+//const testObject = { name: "Bruce Wayne", age: 36, location: "Gotham" }; // use this object to test your functions
 
 // Complete the following underscore functions.
 // Reference http://underscorejs.org/ for examples.
@@ -10,7 +10,11 @@ const testObject = { name: "Bruce Wayne", age: 36, location: "Gotham" }; // use 
   // Return the keys as strings in an array.
   // Based on http://underscorejs.org/#keys
 function keys(obj) {
-  
+  let arr=[];
+  for(let properties in obj){
+    arr.push(properties);
+  }
+  return arr;
 }
 
 function values(obj) {
@@ -42,3 +46,6 @@ function defaults(obj, defaultProps) {
   // Return `obj`.
   // http://underscorejs.org/#defaults
 }
+
+
+module.exports = {keys}
