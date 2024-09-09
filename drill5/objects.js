@@ -55,11 +55,16 @@ function pairs(obj) {
 }
 
 /* STRETCH PROBLEMS */
-
-function invert(obj) {
-  // Returns a copy of the object where the keys have become the values and the values the keys.
+// Returns a copy of the object where the keys have become the values and the values the keys.
   // Assume that all of the object's values will be unique and string serializable.
   // http://underscorejs.org/#invert
+function invert(obj) {
+  let ob1={}
+  for(let properties in obj){
+    ob1[obj[properties]]=properties
+  }
+
+  return ob1;
 }
 
 function defaults(obj, defaultProps) {
@@ -69,4 +74,4 @@ function defaults(obj, defaultProps) {
 }
 
 
-module.exports = {keys, values, mapObject, transform, pairs}
+module.exports = {keys, values, mapObject, transform, pairs, invert}
