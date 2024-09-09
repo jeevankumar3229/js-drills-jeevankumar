@@ -31,12 +31,13 @@ function values(obj) {
  // Like map for arrays, but for objects. Transform the value of each property in turn by passing it to the callback function.
   // http://underscorejs.org/#mapObject
 function mapObject(obj, cb) {
+  let obj1={}
   for(let properties in obj){
-    obj[properties]=transform(obj[properties]);
+    obj1[properties]=transform(obj[properties],properties,obj);
   }
-  return obj;
+  return obj1;
 }
-function transform(item){
+function transform(item,key,object){
   return item+3;
 }
 
