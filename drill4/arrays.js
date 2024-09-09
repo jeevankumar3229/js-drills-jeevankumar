@@ -89,9 +89,12 @@ function convertToSingleValue(starting_value,arrayelement,index, array){
   // If `cb` returns `true` then return that element.
   // Return `undefined` if no elements pass the truth test.
 function find(elements, cb) {
+  if(!Array.isArray(elements)){
+    return "Pass an valid array object";
+  }
   let status;
   for(let i=0;i<elements.length;i++){
-    status=cb(elements[i])
+    status=cb(elements[i],i,elements)
     if(status=== true){
       return elements[i];
     }
@@ -100,7 +103,7 @@ function find(elements, cb) {
     return undefined
   }
 }
-function findsElement(arrayvalue){
+function findsElement(arrayvalue, index,array){
   if(arrayvalue > 2){
     return true;
   }
