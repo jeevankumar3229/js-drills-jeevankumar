@@ -20,16 +20,17 @@ function counterFactory() {
   // Returning null is acceptable if cb can't be returned
 function limitFunctionCallCount(cb, n) {
   let i=1;
-  return function(){
-    while(i<=n){
-      cb(i)
+  return function(a){
+    if(i<=n){
       i++;
+      return cb(a)
+
     }
     return null;
   }
 }
-function print(i1){
-  console.log(i1)
+function print(a){
+  return a*5;
 }
 
 // Should return a function that invokes `cb`.
