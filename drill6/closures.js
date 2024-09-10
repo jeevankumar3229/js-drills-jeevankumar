@@ -40,42 +40,21 @@ function print(a){
   // then it should return the cached result and not invoke `cb` again.
   // `cb` should only ever be invoked once for a given set of arguments.
 function cacheFunction(cb) {
-  let object ={}
-  let n=1,b=1;c=1;i=1;
-  return function(){
-    while(true){
-      let status1;
-      if(i===5){
-        n=1
-        b=1
-        c=1
+  let cache={};
+  return function(a){
+    for(let i in cache){
+      if(i==a){
+        return cache;
       }
-      if(i>1){
-      for(let j=1;j<i;j++){
-        if(object["n"+j]===n && object["b"+j]===b && object["c"+j]===c ){
-          status1=1;
-        }
-      }
-      if(status1===1){
-          return object;
-        }
-      }
-      add(n,b,c)
-      object["n"+i]=n;
-      object["b"+i]=b;
-      object["c"+i]=c;
-      n++;
-      b++;
-      c++;
-      i++;
-      }
-      
     }
-  }
+    let b=print1(a)
+    cache[a]=b;
 
-function add(n1,b1,c1){
-  console.log("sum is ")
-  console.log(n1+b1+c1)
+  }
 }
 
-module.exports = {counterFactory, limitFunctionCallCount, print, cacheFunction,add}
+function print1(input){
+  return input*3;
+}
+
+module.exports = {counterFactory, limitFunctionCallCount, print, cacheFunction,print1}
