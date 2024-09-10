@@ -19,8 +19,22 @@ function counterFactory() {
   // The returned function should only allow `cb` to be invoked `n` times.
   // Returning null is acceptable if cb can't be returned
 function limitFunctionCallCount(cb, n) {
-  
+  let i=1;
+  return function(){
+    while(i<=n){
+      cb(i)
+      i++;
+    }
+    return null;
+  }
 }
+function print(i1){
+  console.log(i1)
+}
+
+
+
+
 
 function cacheFunction(cb) {
   // Should return a function that invokes `cb`.
@@ -31,4 +45,4 @@ function cacheFunction(cb) {
   // `cb` should only ever be invoked once for a given set of arguments.
 }
 
-module.exports = {counterFactory}
+module.exports = {counterFactory, limitFunctionCallCount, print}
