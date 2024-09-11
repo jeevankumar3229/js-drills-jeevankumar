@@ -85,36 +85,6 @@ function findAllUsersWithMasterDegree(){
 
 
 //Q4 Group users based on their Programming language mentioned in their designation.
-function findUsersOnProgrammingLanguage1(language="python"){
-    if(typeof language === 'string'){
-    let pl=language.toLowerCase();
-    let arr={};
-    let status=1;
-    for (let user in users){
-        let a=users[user];
-        if(a.hasOwnProperty("desgination")){
-        for(let properties in a){
-            if(properties === 'desgination'){
-                if(a[properties].toLowerCase().includes(pl) ){
-                    status=2;
-                    arr[user]=users[user];
-
-                }
-            }
-        }
-        }
-    }
-    if(status === 2){
-    return arr;
-    }
-    else{
-        return "There are no users with programming language "+language;
-    }
-}
-else{
-    return "Enter valid Programming language";
-}
-}
 
 function findUsersOnProgrammingLanguage(){
     let arr2={};
