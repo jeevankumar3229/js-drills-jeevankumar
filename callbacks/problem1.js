@@ -24,7 +24,6 @@ function createDirectory(directory, noOfFiles){
 
 function deleteAllFilesFromDirectory(directory){
     let path='./'+directory
-    console.log(path)
     fs.readdir(path,(error,files)=>{
     if(error){
         console.log("Error Occurred :"+error)
@@ -32,7 +31,6 @@ function deleteAllFilesFromDirectory(directory){
     else{
         files.forEach((item)=>{
             let path="./"+directory+"/"+item
-            console.log(path)
             fs.stat(path,(error,stats)=>{
                 if(error){
                     console.log(error)
@@ -43,18 +41,12 @@ function deleteAllFilesFromDirectory(directory){
                             if(error){
                                 console.log(error)
                             }
-                            else{
-                                
-                            }
                         })
                     }
                     else if(stats.isDirectory()){
-                        fs.rmdir(path,(error)=>{
+                        fs.rmd(path,{recursive:true},(error)=>{
                             if(error){
                                 console.log(error)
-                            }
-                            else{
-
                             }
                         })
                     }
