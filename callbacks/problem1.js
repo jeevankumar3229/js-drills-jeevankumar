@@ -20,4 +20,49 @@ function createDirectory(directory, noOfFiles){
     }
 }
 
-export {createDirectory};
+
+
+function deleteAllFilesFromDirectory(directory){
+    let path='./'+directory
+    console.log(path)
+    fs.readdir(path,(error,files)=>{
+    if(error){
+        console.log("Error Occurred :"+error)
+    }
+    else{
+        files.forEach((item)=>{
+            let path="./"+directory+"/"+item
+            console.log(path)
+            fs.stat(path,(error,stats)=>{
+                if(error){
+                    console.log(error)
+                }
+                else{
+                    if(stats.isFile()){
+                        fs.unlink(path,(error)=>{
+                            if(error){
+                                console.log(error)
+                            }
+                            else{
+                                
+                            }
+                        })
+                    }
+                    else if(stats.isDirectory()){
+                        fs.rmdir(path,(error)=>{
+                            if(error){
+                                console.log(error)
+                            }
+                            else{
+
+                            }
+                        })
+                    }
+                }
+            })
+        })
+    }
+ })
+}
+
+export{createDirectory,deleteAllFilesFromDirectory}
