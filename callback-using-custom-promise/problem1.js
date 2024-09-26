@@ -1,47 +1,99 @@
-import fs from 'fs/promises';
+import fs from 'fs';
 function createDirectory(directory) {
-    return fs.mkdir(directory)
-}
-function createFiles(directory, noOfFiles) {
-    let counter = 0
-    let fileArray = []
-    for (let index = 1; index <= noOfFiles; index++) {
-
-        fileArray.push('./' + directory + '/test' + index + ".json")
-    }
-    let writePromise = fileArray.map(item => {
-        return fs.writeFile(item, "")
+    const promise = new Promise(function (resolve, reject) {
+        fs.mkdir(directory, function (error) {
+            if (error) {
+                reject(directory)
+            }
+            else {
+                resolve(directory)
+            }
+        })
     })
-
-    return Promise.all(writePromise)
+    return promise
 }
+
+function createFiles(directory, noOfFiles) {
+    let promiseArray = []
+    for (let index = 1; index <= noOfFiles; index++) {
+        promiseArray.push(new Promise(function (resolve, reject) {
+            fs.writeFile(directory + '/test' + index + ".json", "", function (error) {
+                if (error) {
+                    reject("Error Creating File test" + index + ".json" + error)
+                }
+                else {
+                    resolve("Successfully created file test" + index + ".json")
+                }
+            })
+        }))
+    }
+    return Promise.all(promiseArray).then(() => { return directory })
+
+
+}
+
 
 function deleteAllFilesFromDirectory(directory) {
     let folderContentLength;
     let path = './' + directory
-    fs.readdir(directory).then((files) => {
+    const promise = new Promise(function (resolve, reject) {
+        fs.readdir(path, (error, files) => {
+            if (error) {
+                reject("Error Occurred :" + error)
+            }
+            else {
+                resolve(files)
+            }
+        })
+    })
+    return promise.then((files) => {
+        let promiseArray = []
         folderContentLength = files.length;
-        files.forEach((item) => {
+        promiseArray=files.map((item) => {
             let path = "./" + directory + "/" + item
-            fs.stat(path).then((stats) => {
-                if (stats.isFile()) {
-                    fs.unlink(path).then(() => {
-                        console.log("Successfully Deleted File " + item)
-                    }).catch(Error => {
-                        console.log("Error Deleting File")
+            return new Promise(function (resolve, reject) {
+                fs.stat(path, (error, stats) => {
+                    if (error) {
+                        reject(error)
+
+                    }
+                    else {
+                        resolve(stats)
+                    }
+                })
+            }).then((stats)=>{
+                if(stats.isFile()){
+                    return new Promise(function(resolve,reject){
+                        fs.unlink(path,(error)=>{
+                            if(error){
+                                reject("Error Deleting File " +item)
+                            }
+                            else{
+                                resolve("Successfully Deleted File " +item)
+                            }
+                        })
                     })
                 }
-                else if (stats.isDirectory()) {
-                    fs.rmd(path, { recursive: true }).then(() => {
-                        console.log("Successfully Deleted Folder " + item)
-                    }).catch(Error => {
-                        console.log("Error Deleting Folder")
+                else if(stats.isDirectory()){
+                    return new Promise(function(resolve,reject){
+                        fs.rmd(path,{recursive:true},(error)=>{
+                            if(error){
+                                reject("Error Deleting Folder" +item)
+                            }
+                            else{
+                                resolve("Successfully Deleted Folder " +item)
+                            }
+                        })
                     })
+                   
                 }
+            }).then((message)=>{
+                console.log(message)
+                return
             })
         })
-    }).catch (Error => {
-        console.log("Error Reading File")
-    })
+        return Promise.all(promiseArray)
+    }).then(()=>{return "Successfully Completed All Operations"})
 }
+
 export { createDirectory, createFiles, deleteAllFilesFromDirectory }
