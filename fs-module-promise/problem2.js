@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 
 /*
 Problem 2:
@@ -10,150 +10,95 @@ Using callbacks and the fs module's asynchronous functions, do the following:
 5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
 */
 
-function readFiles(file,callback){
+function readFiles(file){
     let path='./'+file
-    let readData="";
-    fs.readFile(path,(error,data)=>{
-        if(error){
-            console.log("Error Reading File")
-        }
-        else{
-            readData=data.toString('utf-8')
-        }
-    })
-    setTimeout(()=>{
-        callback(readData)
-    },3000)
+    return fs.readFile(path)
 }
 
-function convertUpperCase(data,callback){    
-    let updatedData=data.toUpperCase()
+function convertUpperCase(data){    
+    let updatedData=data.toString().toUpperCase()
     let newFileName='newLipsum.txt'
     let newFilePath='./'+newFileName
-    fs.writeFile(newFilePath,updatedData,(error)=>{
-        if(error){
-            console.log("Error Occurred")
-        }
+    let promiseArray=[]
+    return fs.writeFile(newFilePath,updatedData).then(()=>{
+        fs.writeFile('./filenames.txt',newFileName)
     })
-    fs.writeFile('./filenames.txt',newFileName,(error)=>{
-        if(error){
-            console.log("Error Occurred")
-        }
-    })
-    setTimeout(()=>{
-        callback(newFilePath)
-    },3000)
 }
 
-function convertLowerCase(filePath, callback){
-    let newFileName=""
-    let newFilePath=""
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred when Reading File")
-        }
-        else{
-            let updatedData=data.toString('utf-8').toLowerCase()
-            let sentenceArray=updatedData.split('.')
-            newFileName='newLowerCaseLipsum.txt'
-            newFilePath='./'+newFileName
-            let fileContent=""
-            sentenceArray.forEach((item)=>{
-                let item1;
-                if(item[-1]!=='.' && item!==""){
-                    item1=item+"."+" "
-                }
-                else{
-                    item1=item
-                }
-                if(sentenceArray.indexOf(item)!=0 && item!=""){
-                    item1=item1.substring(1)
-                }
-                fileContent=fileContent+item1
-            })
-            fs.writeFile(newFilePath,fileContent,(error)=>{
-                if(error){
-                    console.log("Error Writing file")
-                }
-            })
-            fs.appendFile('./filenames.txt',"\n"+newFileName,(error)=>{
-                if(error){
-                    console.log("Error Occurred when Appending Data")
-                }
-            })
-
-        }
+function convertLowerCase(filePath){
+    let newFileName='newLowerCaseLipsum.txt'
+    let newFilePath='./'+newFileName
+   return fs.readFile(filePath).then((data)=>{
+        let updatedData=data.toString('utf-8').toLowerCase()
+        let sentenceArray=updatedData.split('.')
+        let fileContent=""
+        sentenceArray.forEach((item)=>{
+            let item1;
+            if(item[-1]!=='.' && item!==""){
+                item1=item+"."+" "
+            }
+            else{
+                item1=item
+            }
+            if(sentenceArray.indexOf(item)!=0 && item!=""){
+                item1=item1.substring(1)
+            }
+            fileContent=fileContent+item1
+        })
+        return fileContent
+    }).then((fileContent)=>{
+        fs.writeFile(newFilePath,fileContent)
+    }).then(()=>{
+       fs.appendFile('./filenames.txt',"\n"+newFileName)
     })
-    setTimeout(()=>{
-        callback('./filenames.txt')
-    },3000)
 }
+    
+   
 
-function readContents(filePath, callback){
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred when Reading Filepath "+file)
-        }
-        else{
-            let data1=data.toString('utf-8').split("\n")
-            data1.forEach((item)=>{
-                fs.readFile('./'+item,(error,data2)=>{
-                    if(error){
-                        console.log("Error Occurred when Reading File "+item)
+
+function readContents(filePath){
+    return fs.readFile(filePath).then((data)=>{
+        let sortedData;
+        let data1=data.toString('utf-8').split("\n")
+        let promiseArray=data1.map((item)=>{
+            return fs.readFile('./'+item).then((data)=>{
+                let data3=data.toString("utf-8").split(" ")
+                let uniqueData=new Set(data3)
+                let uniqueSet1=new Set()
+                let uniqueArray=[]
+                uniqueData.forEach((item1)=>{
+                    if(item1[item1.length-1]===',' || item1[item1.length-1]==='.'){
+                        uniqueSet1.add(item1.substring(0,item1.length-1))
                     }
-                    else{
-                       let data3=data2.toString("utf-8").split(" ")
-                       let uniqueData=new Set(data3)
-                       let uniqueSet1=new Set()
-                       let uniqueArray=[]
-                       uniqueData.forEach((item1)=>{
-                            if(item1[item1.length-1]===',' || item1[item1.length-1]==='.'){
-                                uniqueSet1.add(item1.substring(0,item1.length-1))
-                            }
-                            else if(item1!==""){
-                                uniqueSet1.add(item1)
-                            }
-                       })
-                       uniqueArray=Array.from(uniqueSet1)
-                       let sortedData=uniqueArray.sort().join(' ')
-                       fs.writeFile('./'+'updated'+item,sortedData,(error)=>{
-                        if(error){
-                            console.log("Error when writing to File "+item+"1")
-                        }
-                       })
-                       fs.appendFile(filePath,"\n"+'updated'+item,(error)=>{
-                        if(error){
-                            console.log("Error when Appending data to file")
-                        }
-                       })
+                    else if(item1!==""){
+                        uniqueSet1.add(item1)
                     }
                 })
+                uniqueArray=Array.from(uniqueSet1)
+                sortedData=uniqueArray.sort().join(' ')
+                return sortedData
+            }).then((data)=>{
+                return fs.writeFile('./'+'updated'+item,data)
+            }).then(()=>{
+                fs.appendFile(filePath,"\n"+'updated'+item)
             })
-        }
+        })
+        return Promise.all(promiseArray)
+    }).then(()=>{
+        return fs.readFile(filePath)
+    }).then(data=>{
+        return data.toString()
     })
-    setTimeout(()=>{
-        callback(filePath)
-    },3000)
+     
 }
 
-function deleteFiles(filePath){
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred When Reading Filepath "+filePath)
-        }
-        else{
-            data=data.toString('utf-8').split('\n')
-            data.forEach((item)=>{
-                fs.unlink('./'+item,(error)=>{
-                    if(error){
-                        console.log("Error while deleting file "+item)
-                    }
-                    else{
-                        console.log("Successfully deleted file "+item)
-                    }
-                })
-            })
-        }
-    })
+
+
+function deleteFiles(data){
+    data=data.toString('utf-8').split('\n')
+    return Promise.all(data.map((item)=>{
+        return fs.unlink('./'+item)
+    }))
+    
 }
 export {readFiles,convertUpperCase,convertLowerCase,readContents, deleteFiles}
