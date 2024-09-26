@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 
 /*
 Problem 2:
@@ -10,150 +10,109 @@ Using callbacks and the fs module's asynchronous functions, do the following:
 5. Read the contents of filenames.txt and delete all the new files that are mentioned in that list simultaneously.
 */
 
-function readFiles(file,callback){
-    let path='./'+file
-    let readData="";
-    fs.readFile(path,(error,data)=>{
-        if(error){
-            console.log("Error Reading File")
-        }
-        else{
-            readData=data.toString('utf-8')
-        }
-    })
-    setTimeout(()=>{
-        callback(readData)
-    },3000)
+async function readFiles(file) {
+    try {
+        let path = './' + file
+        let readData = "";
+        const data = await fs.readFile(path)
+        readData = data.toString()
+        return readData;
+    }
+    catch (Error) {
+        console.log(Error)
+    }
 }
 
-function convertUpperCase(data,callback){    
-    let updatedData=data.toUpperCase()
-    let newFileName='newLipsum.txt'
-    let newFilePath='./'+newFileName
-    fs.writeFile(newFilePath,updatedData,(error)=>{
-        if(error){
-            console.log("Error Occurred")
-        }
-    })
-    fs.writeFile('./filenames.txt',newFileName,(error)=>{
-        if(error){
-            console.log("Error Occurred")
-        }
-    })
-    setTimeout(()=>{
-        callback(newFilePath)
-    },3000)
+async function convertUpperCase(data) {
+    try {
+        let updatedData = data.toUpperCase()
+        let newFileName = 'newLipsum.txt'
+        let newFilePath = './' + newFileName
+        await fs.writeFile(newFilePath, updatedData)
+        await fs.writeFile('./filenames.txt', newFileName)
+        return newFileName;
+    }
+    catch (Error) {
+        console.log(Error)
+    }
 }
 
-function convertLowerCase(filePath, callback){
-    let newFileName=""
-    let newFilePath=""
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred when Reading File")
-        }
-        else{
-            let updatedData=data.toString('utf-8').toLowerCase()
-            let sentenceArray=updatedData.split('.')
-            newFileName='newLowerCaseLipsum.txt'
-            newFilePath='./'+newFileName
-            let fileContent=""
-            sentenceArray.forEach((item)=>{
-                let item1;
-                if(item[-1]!=='.' && item!==""){
-                    item1=item+"."+" "
-                }
-                else{
-                    item1=item
-                }
-                if(sentenceArray.indexOf(item)!=0 && item!=""){
-                    item1=item1.substring(1)
-                }
-                fileContent=fileContent+item1
-            })
-            fs.writeFile(newFilePath,fileContent,(error)=>{
-                if(error){
-                    console.log("Error Writing file")
-                }
-            })
-            fs.appendFile('./filenames.txt',"\n"+newFileName,(error)=>{
-                if(error){
-                    console.log("Error Occurred when Appending Data")
-                }
-            })
+async function convertLowerCase(filePath) {
+    try {
+        let newFileName = ""
+        let newFilePath = ""
+        const data = await fs.readFile(filePath)
+        let updatedData = data.toString('utf-8').toLowerCase()
+        let sentenceArray = updatedData.split('.')
+        newFileName = 'newLowerCaseLipsum.txt'
+        newFilePath = './' + newFileName
+        let fileContent = ""
+        sentenceArray.forEach((item) => {
+            let item1;
+            if (item[-1] !== '.' && item !== "") {
+                item1 = item + "." + " "
+            }
+            else {
+                item1 = item
+            }
+            if (sentenceArray.indexOf(item) != 0 && item != "") {
+                item1 = item1.substring(1)
+            }
+            fileContent = fileContent + item1
+        })
+        await fs.writeFile(newFilePath, fileContent)
+        await fs.appendFile('./filenames.txt', "\n" + newFileName)
+        return './filenames.txt'
+    }
+    catch (Error) {
+        console.log(Error)
+    }
 
-        }
-    })
-    setTimeout(()=>{
-        callback('./filenames.txt')
-    },3000)
+
 }
 
-function readContents(filePath, callback){
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred when Reading Filepath "+file)
-        }
-        else{
-            let data1=data.toString('utf-8').split("\n")
-            data1.forEach((item)=>{
-                fs.readFile('./'+item,(error,data2)=>{
-                    if(error){
-                        console.log("Error Occurred when Reading File "+item)
-                    }
-                    else{
-                       let data3=data2.toString("utf-8").split(" ")
-                       let uniqueData=new Set(data3)
-                       let uniqueSet1=new Set()
-                       let uniqueArray=[]
-                       uniqueData.forEach((item1)=>{
-                            if(item1[item1.length-1]===',' || item1[item1.length-1]==='.'){
-                                uniqueSet1.add(item1.substring(0,item1.length-1))
-                            }
-                            else if(item1!==""){
-                                uniqueSet1.add(item1)
-                            }
-                       })
-                       uniqueArray=Array.from(uniqueSet1)
-                       let sortedData=uniqueArray.sort().join(' ')
-                       fs.writeFile('./'+'updated'+item,sortedData,(error)=>{
-                        if(error){
-                            console.log("Error when writing to File "+item+"1")
-                        }
-                       })
-                       fs.appendFile(filePath,"\n"+'updated'+item,(error)=>{
-                        if(error){
-                            console.log("Error when Appending data to file")
-                        }
-                       })
-                    }
-                })
+async function readContents(filePath) {
+    try {
+        let data = await fs.readFile(filePath)
+        let data1 = data.toString('utf-8').split("\n")
+        for (const item of data1) {
+            const data2 = await fs.readFile('./' + item)
+            let data3 = data2.toString("utf-8").split(" ")
+            let uniqueData = new Set(data3)
+            let uniqueSet1 = new Set()
+            let uniqueArray = []
+            uniqueData.forEach((item1) => {
+                if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
+                    uniqueSet1.add(item1.substring(0, item1.length - 1))
+                }
+                else if (item1 !== "") {
+                    uniqueSet1.add(item1)
+                }
             })
+            uniqueArray = Array.from(uniqueSet1)
+            let sortedData = uniqueArray.sort().join(' ')
+            await fs.writeFile('./' + 'updated' + item, sortedData)
+            await fs.appendFile(filePath, "\n" + 'updated' + item)
+
         }
-    })
-    setTimeout(()=>{
-        callback(filePath)
-    },3000)
+        return filePath
+    }
+    catch (Error) {
+        console.log(Error)
+    }
 }
 
-function deleteFiles(filePath){
-    fs.readFile(filePath,(error,data)=>{
-        if(error){
-            console.log("Error Occurred When Reading Filepath "+filePath)
+async function deleteFiles(filePath) {
+    try {
+        let data=await fs.readFile(filePath)
+        data = data.toString('utf-8').split('\n')
+        for(const item of data){
+            await fs.unlink('./' + item)
         }
-        else{
-            data=data.toString('utf-8').split('\n')
-            data.forEach((item)=>{
-                fs.unlink('./'+item,(error)=>{
-                    if(error){
-                        console.log("Error while deleting file "+item)
-                    }
-                    else{
-                        console.log("Successfully deleted file "+item)
-                    }
-                })
-            })
-        }
-    })
+    }
+    catch (Error) {
+        console.log(Error)
+    }
+
 }
-export {readFiles,convertUpperCase,convertLowerCase,readContents, deleteFiles}
+export { readFiles, convertUpperCase, convertLowerCase, readContents, deleteFiles }
