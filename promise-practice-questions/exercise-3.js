@@ -30,52 +30,46 @@
     BONUS: WHY does it work this way?
 */
 
-function exercise(){
-   console.log("Program Started")
-   try{
-      const promise= new Promise(function(resolve,reject){
-         setTimeout(()=>{
-            resolve({data: "Hello, friend!", error: null})
-         },5000)
-      })
-      console.log(promise,"Program in progress...")
-      return promise
-   }
-   catch(error){
-      console.log(error)
-   }
-}
+console.log("Program Started")
+
+const promise = new Promise(function (resolve, reject) {
+   setTimeout(() => {
+      resolve({ data: "Hello, friend!", error: null })
+   }, 5000)
+})
+console.log(promise, "Program in progress...")
 
 
-exercise().then((data)=>{
+
+promise.then((data) => {
    console.log(data)
-   return new Promise(function(resolve,reject){
-      try{
-         setTimeout(()=>{
+   return new Promise(function (resolve, reject) {
+      try {
+         setTimeout(() => {
             resolve("First promise chain complete!")
-         },2000)
+         }, 2000)
       }
-      catch(error){
+      catch (error) {
          reject(error)
       }
    })
-}).then((data)=>{
+}).then((data) => {
    console.log(data)
 })
 
 
-exercise().then((data)=>{
+promise.then((data) => {
    console.log(data)
-   return new Promise(function(resolve,reject){
-      try{
-         setTimeout(()=>{
+   return new Promise(function (resolve, reject) {
+      try {
+         setTimeout(() => {
             resolve("Second promise chain complete!")
-         },10000)
+         }, 10000)
       }
-      catch(error){
+      catch (error) {
          reject(error)
       }
    })
-}).then((data)=>{
+}).then((data) => {
    console.log(data)
 })
