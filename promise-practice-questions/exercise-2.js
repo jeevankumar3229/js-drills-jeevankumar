@@ -22,13 +22,13 @@ function exercise2() {
             resolve("Step 1 complete")
 
          }, 3000)
-}
-       catch (error) {
-   reject(error)
-}
+      }
+      catch (error) {
+         reject(error)
+      }
    })
-console.log(promise, "Program in progress")
-return promise
+   console.log(promise, "Program in progress")
+   return promise
 }
 exercise2().then((data) => {
    console.log("Step 1 complete")
@@ -37,7 +37,7 @@ exercise2().then((data) => {
          resolve("Step 2 Complete")
       }, 3000)
    })
-}).then((data)=>{
+}).then((data) => {
    console.log(data)
 }).catch(error => {
    console.log(error)
