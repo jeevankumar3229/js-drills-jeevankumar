@@ -18,8 +18,8 @@ async function readFiles(file) {
         readData = data.toString()
         return readData;
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 
@@ -32,8 +32,8 @@ async function convertUpperCase(data) {
         await fs.writeFile('./filenames.txt', newFileName)
         return newFileName;
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 
@@ -64,8 +64,8 @@ async function convertLowerCase(filePath) {
         await fs.appendFile('./filenames.txt', "\n" + newFileName)
         return './filenames.txt'
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 
 
@@ -97,8 +97,8 @@ async function readContents(filePath) {
         }
         return filePath
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 
@@ -110,8 +110,8 @@ async function deleteFiles(filePath) {
             await fs.unlink('./' + item)
         }
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 
 }

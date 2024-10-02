@@ -7,6 +7,6 @@ try {
     file = await readContents(file)
     await deleteFiles(file)
 }
-catch (Error) {
-    console.log(Error)
+catch (error) {
+    console.log(error)
 }

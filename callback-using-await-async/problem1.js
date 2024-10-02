@@ -4,8 +4,8 @@ async function createDirectory(directory) {
     try {
         await fs.mkdir(directory)
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 
@@ -17,8 +17,8 @@ async function createFiles(directory, noOfFiles) {
             await fs.writeFile('./' + directory + '/test' + index + ".json", "")
         }
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 
@@ -40,8 +40,8 @@ async function deleteAllFilesFromDirectory(directory) {
             }
         }
     }
-    catch (Error) {
-        throw Error
+    catch (error) {
+        throw error
     }
 }
 

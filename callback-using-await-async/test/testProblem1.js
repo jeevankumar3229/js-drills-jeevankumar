@@ -9,6 +9,6 @@ try {
     await deleteAllFilesFromDirectory(directory)
     console.log("Successfully Deleted All Files")
 }
-catch (Error) {
-    console.log(Error)
+catch (error) {
+    console.log(error)
 }
