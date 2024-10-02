@@ -2,13 +2,12 @@ import fs from 'fs';
 function createDirectory(directory, noOfFiles, callback){
     fs.mkdir(directory,function(error){
         if(error){
-            console.log("Directory Already Exist")
+            console.log(error)
         }
         else{
-            console.log(directory +" directory created");
+            callback(directory,noOfFiles)
         }
     })
-    callback(directory,noOfFiles)
 }
 
 function createFiles(directory,noOfFiles,callback){
@@ -16,14 +15,16 @@ function createFiles(directory,noOfFiles,callback){
     for(let index=1;index<=noOfFiles;index++){
         fs.writeFile('./'+directory+'/test'+index+".json","",function(error){
             if(error){
-                console.log("Error Creating File test"+index+".json")
+                console.log(error)
             }
             else{
                 console.log("Successfully created file test"+index+".json")
+                if(index===noOfFiles){
+                    callback(directory)
+                }
             }
         })
     }
-    callback(directory)
 }
 
 
@@ -33,7 +34,7 @@ function deleteAllFilesFromDirectory(directory){
     let path='./'+directory
     fs.readdir(path,(error,files)=>{
         if(error){
-            console.log("Error Occurred :"+error)
+            console.log(error)
         }
         else{
             folderContentLength=files.length;
@@ -47,7 +48,7 @@ function deleteAllFilesFromDirectory(directory){
                         if(stats.isFile()){
                             fs.unlink(path,(error)=>{
                                 if(error){
-                                    console.log("Error Deleting File " +item)
+                                    console.log(error)
                                 }
                                 else{
                                     console.log("Successfully Deleted File " +item)
@@ -57,7 +58,7 @@ function deleteAllFilesFromDirectory(directory){
                         else if(stats.isDirectory()){
                             fs.rmd(path,{recursive:true},(error)=>{
                                 if(error){
-                                    console.log("Error Deleting Folder" +item)
+                                    console.log(error)
                                 }
                                 else{
                                     console.log("Successfully Deleted Folder " +item)
