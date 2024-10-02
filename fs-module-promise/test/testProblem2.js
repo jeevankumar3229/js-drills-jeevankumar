@@ -24,4 +24,3 @@ readFiles(file).then((data)=>{
 }).catch(Error=>{
     console.log(Error)
 })
-    
