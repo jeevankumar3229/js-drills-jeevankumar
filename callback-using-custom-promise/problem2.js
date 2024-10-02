@@ -16,7 +16,7 @@ function readFiles(file) {
     const promise = new Promise(function (resolve, reject) {
         fs.readFile(path, (error, data) => {
             if (error) {
-                reject("Error Reading File")
+                reject(error)
             }
             else {
                 readData = data.toString('utf-8')
@@ -34,7 +34,7 @@ function convertUpperCase(data) {
     return new Promise(function (resolve, reject) {
         fs.writeFile(newFilePath, updatedData, (error) => {
             if (error) {
-                reject("Error Occurred")
+                reject(error)
             } else {
                 resolve("Success")
             }
@@ -43,15 +43,13 @@ function convertUpperCase(data) {
         return new Promise(function (resolve, reject) {
             fs.writeFile('./filenames.txt', newFileName, (error) => {
                 if (error) {
-                    reject("Error Occurred")
+                    reject(error)
                 }
                 else {
                     resolve(newFileName)
                 }
             })
         })
-    }).catch(error => {
-        console.log(error)
     })
 }
 
@@ -61,7 +59,7 @@ function convertLowerCase(filePath) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filePath, (error, data) => {
             if (error) {
-                reject("Error Occurred when Reading File")
+                reject(error)
             }
             else {
                 resolve(data)
@@ -91,7 +89,7 @@ function convertLowerCase(filePath) {
         return new Promise(function (resolve, reject) {
             fs.writeFile(newFilePath, fileContent, (error) => {
                 if (error) {
-                    reject("Error Writing file")
+                    reject(error)
                 }
                 else {
                     resolve(newFileName)
@@ -102,7 +100,7 @@ function convertLowerCase(filePath) {
         return new Promise(function (resolve, reject) {
             fs.appendFile('./filenames.txt', "\n" + newFileName, (error) => {
                 if (error) {
-                    reject("Error Occurred when Appending Data")
+                    reject(error)
                 }
                 else {
                     resolve('./filenames.txt')
@@ -116,7 +114,7 @@ function readContents(filePath) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filePath, (error, data) => {
             if (error) {
-                reject("Error Occurred when Reading Filepath " + file)
+                reject(error)
             }
             else {
                 resolve(data)
@@ -129,7 +127,7 @@ function readContents(filePath) {
             return new Promise(function (resolve, reject) {
                 fs.readFile('./' + item, (error, data2) => {
                     if (error) {
-                        reject("Error Occurred when Reading File " + item)
+                        reject(error)
                     }
                     else {
                         resolve(data2)
@@ -155,7 +153,7 @@ function readContents(filePath) {
                 return new Promise(function (resolve, reject) {
                     fs.writeFile('./' + 'updated' + item, sortedData, (error) => {
                         if (error) {
-                            reject("Error when writing to File " + item + "1")
+                            reject(error)
                         }
                         else {
                             resolve(filePath)
@@ -166,15 +164,13 @@ function readContents(filePath) {
                 new Promise(function (resolve, reject) {
                     fs.appendFile(filePath, "\n" + 'updated' + item, (error) => {
                         if (error) {
-                            reject("Error when Appending data to file")
+                            reject(error)
                         }
                         else {
                             resolve("Success")
                         }
                     })
                 })
-            }).catch(error=>{
-                console.log(error)
             })
         })
         return Promise.all(promiseArray)
@@ -187,7 +183,7 @@ function deleteFiles(filePath){
     return new Promise(function(resolve,reject){
         fs.readFile(filePath,(error,data)=>{
             if(error){
-                reject("Error Occurred When Reading Filepath "+filePath)
+                reject(error)
             }
             else{
                 resolve(data)
@@ -200,7 +196,7 @@ function deleteFiles(filePath){
             promiseArray.push(new Promise(function(resolve,reject){
                 fs.unlink('./'+item,(error)=>{
                     if(error){
-                        reject("Error while deleting file "+item)
+                        reject(error)
                     }
                     else{
                         resolve("Successfully deleted file "+item)

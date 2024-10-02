@@ -3,7 +3,7 @@ function createDirectory(directory) {
     const promise = new Promise(function (resolve, reject) {
         fs.mkdir(directory, function (error) {
             if (error) {
-                reject(directory)
+                reject(error)
             }
             else {
                 resolve(directory)
@@ -19,7 +19,7 @@ function createFiles(directory, noOfFiles) {
         promiseArray.push(new Promise(function (resolve, reject) {
             fs.writeFile(directory + '/test' + index + ".json", "", function (error) {
                 if (error) {
-                    reject("Error Creating File test" + index + ".json" + error)
+                    reject(error)
                 }
                 else {
                     resolve("Successfully created file test" + index + ".json")
@@ -36,20 +36,19 @@ function createFiles(directory, noOfFiles) {
 function deleteAllFilesFromDirectory(directory) {
     let folderContentLength;
     let path = './' + directory
-    const promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         fs.readdir(path, (error, files) => {
             if (error) {
-                reject("Error Occurred :" + error)
+                reject(error)
             }
             else {
                 resolve(files)
             }
         })
-    })
-    return promise.then((files) => {
+    }).then((files) => {
         let promiseArray = []
         folderContentLength = files.length;
-        promiseArray=files.map((item) => {
+        promiseArray = files.map((item) => {
             let path = "./" + directory + "/" + item
             return new Promise(function (resolve, reject) {
                 fs.stat(path, (error, stats) => {
@@ -61,39 +60,38 @@ function deleteAllFilesFromDirectory(directory) {
                         resolve(stats)
                     }
                 })
-            }).then((stats)=>{
-                if(stats.isFile()){
-                    return new Promise(function(resolve,reject){
-                        fs.unlink(path,(error)=>{
-                            if(error){
-                                reject("Error Deleting File " +item)
+            }).then((stats) => {
+                if (stats.isFile()) {
+                    return new Promise(function (resolve, reject) {
+                        fs.unlink(path, (error) => {
+                            if (error) {
+                                reject(error)
                             }
-                            else{
-                                resolve("Successfully Deleted File " +item)
+                            else {
+                                resolve("Successfully Deleted File " + item)
                             }
                         })
                     })
                 }
-                else if(stats.isDirectory()){
-                    return new Promise(function(resolve,reject){
-                        fs.rmd(path,{recursive:true},(error)=>{
-                            if(error){
-                                reject("Error Deleting Folder" +item)
+                else if (stats.isDirectory()) {
+                    return new Promise(function (resolve, reject) {
+                        fs.rmd(path, { recursive: true }, (error) => {
+                            if (error) {
+                                reject(error)
                             }
-                            else{
-                                resolve("Successfully Deleted Folder " +item)
+                            else {
+                                resolve("Successfully Deleted Folder " + item)
                             }
                         })
                     })
-                   
+
                 }
-            }).then((message)=>{
+            }).then((message) => {
                 console.log(message)
-                return
             })
         })
         return Promise.all(promiseArray)
-    }).then(()=>{return "Successfully Completed All Operations"})
+    }).then(() => { return "Successfully Completed All Operations" })
 }
 
 export { createDirectory, createFiles, deleteAllFilesFromDirectory }
