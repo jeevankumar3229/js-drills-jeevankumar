@@ -9,11 +9,16 @@ function createFiles(directory, noOfFiles) {
 
         fileArray.push('./' + directory + '/test' + index + ".json")
     }
-    let writePromise = fileArray.map(item => {
-        return fs.writeFile(item, "")
+    let promise=fs.writeFile(fileArray.shift(),"")
+    fileArray.forEach(item => {
+        promise=promise.then(()=>{
+            return fs.writeFile(item,"")
+        }).catch(error=>{
+            console.log(error)
+        })
     })
 
-    return Promise.all(writePromise)
+    return promise;
 }
 
 function deleteAllFilesFromDirectory(directory) {
@@ -28,20 +33,22 @@ function deleteAllFilesFromDirectory(directory) {
                     fs.unlink(path).then(() => {
                         console.log("Successfully Deleted File " + item)
                     }).catch(Error => {
-                        console.log("Error Deleting File")
+                        console.log(Error)
                     })
                 }
                 else if (stats.isDirectory()) {
                     fs.rmd(path, { recursive: true }).then(() => {
                         console.log("Successfully Deleted Folder " + item)
                     }).catch(Error => {
-                        console.log("Error Deleting Folder")
+                        console.log(Error)
                     })
                 }
+            }).catch(Error=>{
+                console.log(Error)
             })
         })
     }).catch (Error => {
-        console.log("Error Reading File")
+        console.log(Error)
     })
 }
 export { createDirectory, createFiles, deleteAllFilesFromDirectory }

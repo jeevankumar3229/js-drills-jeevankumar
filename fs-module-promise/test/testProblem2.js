@@ -9,19 +9,19 @@ readFiles(file).then((data)=>{
                 deleteFiles(data).then(()=>{
                     console.log("Successfully completed All the Operations")
                 }).catch(Error=>{
-                    console.log("Delete Files Error")
+                    console.log(Error)
                 })
              }).catch(Error=>{
-                console.log("Raeding Contents Error")
+                console.log(Error)
              })
         }).catch(Error=>{
-            console.log("Convert LowerCase Error")
+            console.log(Error)
         })
     }).catch(Error=>{
-        console.log("Convert UpperCase Error")
+        console.log(Error)
     })
 
 }).catch(Error=>{
-    console.log("Reading File Error")
+    console.log(Error)
 })
     
