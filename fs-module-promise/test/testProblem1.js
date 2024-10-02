@@ -4,10 +4,10 @@ let noOfFiles=5
 createDirectory(directory).then(()=>{
     createFiles(directory,noOfFiles).then(()=>{
         deleteAllFilesFromDirectory(directory)
-    }).catch(Error=>{
-        console.log(Error)
+    }).catch(error=>{
+        console.log(error)
     })
-}).catch(Error=>{
-    console.log(Error)
+}).catch(error=>{
+    console.log(error)
 })
 

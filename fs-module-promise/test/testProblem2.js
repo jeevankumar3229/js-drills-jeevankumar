@@ -8,19 +8,19 @@ readFiles(file).then((data)=>{
             readContents(file3).then((data)=>{
                 deleteFiles(data).then(()=>{
                     console.log("Successfully completed All the Operations")
-                }).catch(Error=>{
-                    console.log(Error)
+                }).catch(error=>{
+                    console.log(error)
                 })
-             }).catch(Error=>{
-                console.log(Error)
+             }).catch(error=>{
+                console.log(error)
              })
-        }).catch(Error=>{
-            console.log(Error)
+        }).catch(error=>{
+            console.log(error)
         })
-    }).catch(Error=>{
-        console.log(Error)
+    }).catch(error=>{
+        console.log(error)
     })
 
-}).catch(Error=>{
-    console.log(Error)
+}).catch(error=>{
+    console.log(error)
 })
