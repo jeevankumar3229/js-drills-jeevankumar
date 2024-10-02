@@ -5,13 +5,13 @@ createDirectory(directory).then((directory)=>{
     createFiles(directory,noOfFiles).then((directory)=>{
          deleteAllFilesFromDirectory(directory).then((data)=>{
             console.log(data)
-         }).catch(Error=>{
-            console.log(Error)
+         }).catch(error=>{
+            console.log(error)
          })
-    }).catch(Error=>{
-        console.log(Error)
+    }).catch(error=>{
+        console.log(error)
     })
-}).catch(Error=>{
-    console.log(Error)
+}).catch(error=>{
+    console.log(error)
 })
 

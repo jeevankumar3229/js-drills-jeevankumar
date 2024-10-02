@@ -7,20 +7,20 @@ readFiles(file).then((data)=>{
              readContents(filePath).then(()=>{
                 deleteFiles(file3).then(()=>{
                     console.log("Successfully completed All the Operations")
-                }).catch(Error=>{
-                    console.log(Error)
+                }).catch(error=>{
+                    console.log(error)
                 })
-             }).catch(Error=>{
-                console.log(Error)
+             }).catch(error=>{
+                console.log(error)
              })
-        }).catch(Error=>{
-            console.log(Error)
+        }).catch(error=>{
+            console.log(error)
         })
-    }).catch(Error=>{
-        console.log(Error)
+    }).catch(error=>{
+        console.log(error)
     })
 
-}).catch(Error=>{
-    console.log(Error)
+}).catch(error=>{
+    console.log(error)
 })
     
