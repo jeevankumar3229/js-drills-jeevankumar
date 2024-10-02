@@ -5,7 +5,7 @@ async function createDirectory(directory) {
         await fs.mkdir(directory)
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 
@@ -18,7 +18,7 @@ async function createFiles(directory, noOfFiles) {
         }
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 
@@ -41,7 +41,7 @@ async function deleteAllFilesFromDirectory(directory) {
         }
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 

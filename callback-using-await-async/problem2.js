@@ -19,7 +19,7 @@ async function readFiles(file) {
         return readData;
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 
@@ -33,7 +33,7 @@ async function convertUpperCase(data) {
         return newFileName;
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 
@@ -65,7 +65,7 @@ async function convertLowerCase(filePath) {
         return './filenames.txt'
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 
 
@@ -98,7 +98,7 @@ async function readContents(filePath) {
         return filePath
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 }
 
@@ -111,7 +111,7 @@ async function deleteFiles(filePath) {
         }
     }
     catch (Error) {
-        console.log(Error)
+        throw Error
     }
 
 }
