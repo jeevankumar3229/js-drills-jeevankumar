@@ -110,7 +110,7 @@ function convertLowerCase(filePath) {
     })
 }
 
-function readContents(filePath) {
+function sortContents(filePath) {
     return new Promise(function (resolve, reject) {
         fs.readFile(filePath, (error, data) => {
             if (error) {
@@ -121,85 +121,69 @@ function readContents(filePath) {
             }
         })
     }).then((data) => {
-        let promiseArray = []
-        let data1 = data.toString('utf-8').split("\n")
-        promiseArray = data1.map((item) => {
-            return new Promise(function (resolve, reject) {
-                fs.readFile('./' + item, (error, data2) => {
-                    if (error) {
-                        reject(error)
-                    }
-                    else {
-                        resolve(data2)
-                    }
-                })
-            }).then((data2) => {
-                let data3 = data2.toString("utf-8").split(" ")
-                let uniqueData = new Set(data3)
-                let uniqueSet1 = new Set()
-                let uniqueArray = []
-                uniqueData.forEach((item1) => {
-                    if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
-                        uniqueSet1.add(item1.substring(0, item1.length - 1))
-                    }
-                    else if (item1 !== "") {
-                        uniqueSet1.add(item1)
-                    }
-                })
-                uniqueArray = Array.from(uniqueSet1)
-                let sortedData = uniqueArray.sort().join(' ')
-                return sortedData
-            }).then((sortedData) => {
-                return new Promise(function (resolve, reject) {
-                    fs.writeFile('./' + 'updated' + item, sortedData, (error) => {
-                        if (error) {
-                            reject(error)
-                        }
-                        else {
-                            resolve(filePath)
-                        }
-                    })
-                })
-            }).then((filePath) => {
-                new Promise(function (resolve, reject) {
-                    fs.appendFile(filePath, "\n" + 'updated' + item, (error) => {
-                        if (error) {
-                            reject(error)
-                        }
-                        else {
-                            resolve("Success")
-                        }
-                    })
-                })
+        let data3 = data.toString("utf-8").split(" ")
+        let uniqueData = new Set(data3)
+        let uniqueSet1 = new Set()
+        let uniqueArray = []
+        uniqueData.forEach((item1) => {
+            if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
+                uniqueSet1.add(item1.substring(0, item1.length - 1))
+            }
+            else if (item1 !== "") {
+                uniqueSet1.add(item1)
+            }
+        })
+        uniqueArray = Array.from(uniqueSet1)
+        let sortedData = uniqueArray.sort().join(' ')
+        return sortedData
+    }).then((sortedData) => {
+        return new Promise(function (resolve, reject) {
+            fs.writeFile('./sortingFile.txt', sortedData, (error) => {
+                if (error) {
+                    reject(error)
+                }
+                else {
+                    resolve('./filenames.txt')
+                }
             })
         })
-        return Promise.all(promiseArray)
+    }).then((filePath) => {
+        return new Promise(function (resolve, reject) {
+            fs.appendFile(filePath, '\n'+'sortingFile.txt', (error) => {
+                if (error) {
+                    reject(error)
+                }
+                else {
+                    resolve('./filenames.txt')
+                }
+            })
+        })
     })
 }
 
 
 
-function deleteFiles(filePath){
-    return new Promise(function(resolve,reject){
-        fs.readFile(filePath,(error,data)=>{
-            if(error){
+function deleteFiles(filePath) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(filePath, (error, data) => {
+            if (error) {
                 reject(error)
             }
-            else{
+            else {
                 resolve(data)
             }
         })
-    }).then((data)=>{
-        data=data.toString('utf-8').split('\n')
-        let promiseArray=[]
-        data.forEach((item)=>{
-            promiseArray.push(new Promise(function(resolve,reject){
-                fs.unlink('./'+item,(error)=>{
-                    if(error){
+    }).then((data) => {
+        data = data.toString('utf-8').split('\n')
+        let promiseArray = []
+        data.forEach((item) => {
+            promiseArray.push(new Promise(function (resolve, reject) {
+                fs.unlink('./' + item, (error) => {
+                    if (error) {
                         reject(error)
                     }
-                    else{
-                        resolve("Successfully deleted file "+item)
+                    else {
+                        resolve("Successfully deleted file " + item)
                     }
                 })
             }))
@@ -207,4 +191,4 @@ function deleteFiles(filePath){
         return Promise.all(promiseArray)
     })
 }
-export { readFiles, convertUpperCase, convertLowerCase,readContents, deleteFiles }
+export { readFiles, convertUpperCase, convertLowerCase, sortContents, deleteFiles }
