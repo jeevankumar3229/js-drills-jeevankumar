@@ -12,7 +12,7 @@ function createFiles(directory, noOfFiles) {
     let promise=fs.writeFile(fileArray.shift(),"")
     fileArray.forEach(item => {
         promise=promise.then(()=>{
-            return fs.writeFile("","")
+            return fs.writeFile(item,"")
         })
     })
 

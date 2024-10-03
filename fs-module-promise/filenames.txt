@@ -1,4 +1,3 @@
 newLipsum.txt
 newLowerCaseLipsum.txt
-updatednewLipsum.txt
-updatednewLowerCaseLipsum.txt
+sortingFile.txt

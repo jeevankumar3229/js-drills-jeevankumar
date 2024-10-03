@@ -19,7 +19,6 @@ function convertUpperCase(data) {
     let updatedData = data.toString().toUpperCase()
     let newFileName = 'newLipsum.txt'
     let newFilePath = './' + newFileName
-    let newFilePath1 = ""
     return fs.writeFile(newFilePath, updatedData).then(() => {
         return fs.writeFile('./filenames.txt', newFileName)
     })
@@ -50,48 +49,42 @@ function convertLowerCase(filePath) {
         return fs.writeFile(newFilePath, fileContent)
     }).then(() => {
         return fs.appendFile('./filenames.txt', "\n" + newFileName)
+    }).then(()=>{
+        return newFilePath;
     })
 }
 
 
 
 
-function readContents(filePath) {
+function sortContents(filePath) {
     return fs.readFile(filePath).then((data) => {
-        let data1 = data.toString('utf-8').split("\n");
-        let promiseArray = data1.map((item) => {
-            return fs.readFile('./' + item).then((data) => {
-                let data3 = data.toString("utf-8").split(" ");
-                let uniqueData = new Set(data3);
-                let uniqueSet1 = new Set();
-                let uniqueArray = [];
-                uniqueData.forEach((item1) => {
-                    if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
-                        uniqueSet1.add(item1.substring(0, item1.length - 1));
-                    } else if (item1 !== "") {
-                        uniqueSet1.add(item1);
-                    }
-                });
-                uniqueArray = Array.from(uniqueSet1);
-                const sortedData = uniqueArray.sort().join(' ');
-                return fs.writeFile('./' + 'updated' + item, sortedData);
-            }).then(() => {
-                return fs.appendFile(filePath, "\n" + 'updated' + item)
-            });
+        let data3 = data.toString("utf-8").split(" ");
+        let uniqueData = new Set(data3);
+        let uniqueSet1 = new Set();
+        let uniqueArray = [];
+        uniqueData.forEach((item1) => {
+            if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
+                uniqueSet1.add(item1.substring(0, item1.length - 1));
+            } else if (item1 !== "") {
+                uniqueSet1.add(item1);
+            }
         });
-        return promiseArray.reduce((acc, item) => {
-            return acc.then(() => item);
-        });
+        uniqueArray = Array.from(uniqueSet1);
+        const sortedData = uniqueArray.sort().join(' ');
+        return fs.writeFile('./sortingFile.txt', sortedData);
     }).then(() => {
-        return fs.readFile(filePath);
-    }).then(data => {
-        return data.toString();
-    });
+        return fs.appendFile('./filenames.txt', "\n" +'sortingFile.txt')
+    }).then(() => {
+        return fs.readFile('./filenames.txt');
+    }).then((data)=>{
+        return data.toString()
+    })
 }
 
 function deleteFiles(data) {
     data = data.toString('utf-8').split('\n')
-    let promiseArray=data.map((item) => {
+    let promiseArray = data.map((item) => {
         return fs.unlink('./' + item)
     })
     return promiseArray.reduce((acc, item) => {
@@ -99,4 +92,4 @@ function deleteFiles(data) {
     });
 
 }
-export { readFiles, convertUpperCase, convertLowerCase, readContents, deleteFiles }
+export { readFiles, convertUpperCase, convertLowerCase, sortContents, deleteFiles }
