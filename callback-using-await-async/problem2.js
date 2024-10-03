@@ -62,7 +62,7 @@ async function convertLowerCase(filePath) {
         })
         await fs.writeFile(newFilePath, fileContent)
         await fs.appendFile('./filenames.txt', "\n" + newFileName)
-        return './filenames.txt'
+        return newFilePath
     }
     catch (error) {
         throw error
@@ -71,31 +71,26 @@ async function convertLowerCase(filePath) {
 
 }
 
-async function readContents(filePath) {
+async function sortContents(filePath) {
     try {
-        let data = await fs.readFile(filePath)
-        let data1 = data.toString('utf-8').split("\n")
-        for (const item of data1) {
-            const data2 = await fs.readFile('./' + item)
-            let data3 = data2.toString("utf-8").split(" ")
-            let uniqueData = new Set(data3)
-            let uniqueSet1 = new Set()
-            let uniqueArray = []
-            uniqueData.forEach((item1) => {
-                if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
-                    uniqueSet1.add(item1.substring(0, item1.length - 1))
-                }
-                else if (item1 !== "") {
-                    uniqueSet1.add(item1)
-                }
-            })
-            uniqueArray = Array.from(uniqueSet1)
-            let sortedData = uniqueArray.sort().join(' ')
-            await fs.writeFile('./' + 'updated' + item, sortedData)
-            await fs.appendFile(filePath, "\n" + 'updated' + item)
-
-        }
-        return filePath
+        const data2 = await fs.readFile(filePath)
+        let data3 = data2.toString("utf-8").split(" ")
+        let uniqueData = new Set(data3)
+        let uniqueSet1 = new Set()
+        let uniqueArray = []
+        uniqueData.forEach((item1) => {
+            if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
+                uniqueSet1.add(item1.substring(0, item1.length - 1))
+            }
+            else if (item1 !== "") {
+                uniqueSet1.add(item1)
+            }
+        })
+        uniqueArray = Array.from(uniqueSet1)
+        let sortedData = uniqueArray.sort().join(' ')
+        await fs.writeFile('./sortingFile.txt', sortedData)
+        await fs.appendFile('./filenames.txt', "\n" + 'sortingFile.txt')
+        return './filenames.txt'
     }
     catch (error) {
         throw error
@@ -104,9 +99,9 @@ async function readContents(filePath) {
 
 async function deleteFiles(filePath) {
     try {
-        let data=await fs.readFile(filePath)
+        let data = await fs.readFile(filePath)
         data = data.toString('utf-8').split('\n')
-        for(const item of data){
+        for (const item of data) {
             await fs.unlink('./' + item)
         }
     }
@@ -115,4 +110,4 @@ async function deleteFiles(filePath) {
     }
 
 }
-export { readFiles, convertUpperCase, convertLowerCase, readContents, deleteFiles }
+export { readFiles, convertUpperCase, convertLowerCase, sortContents, deleteFiles }
