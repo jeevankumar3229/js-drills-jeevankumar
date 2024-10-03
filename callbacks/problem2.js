@@ -82,7 +82,7 @@ function convertLowerCase(filePath, callback) {
                             console.log(error)
                         }
                         else {
-                            callback('./filenames.txt')
+                            callback(newFilePath)
                         }
                     })
                 }
@@ -92,57 +92,44 @@ function convertLowerCase(filePath, callback) {
     })
 }
 
-function readContents(filePath, callback) {
+function sortContents(filePath, callback) {
     fs.readFile(filePath, (error, data) => {
         if (error) {
             console.log(error)
         }
         else {
-            let data1 = data.toString('utf-8').split("\n")
-            data1.forEach((item, index, array) => {
-                fs.readFile('./' + item, (error, data2) => {
-                    if (error) {
-                        console.log(error)
-                    }
-                    else {
-                        let data3 = data2.toString("utf-8").split(" ")
-                        let uniqueData = new Set(data3)
-                        let uniqueSet1 = new Set()
-                        let uniqueArray = []
-                        uniqueData.forEach((item1) => {
-                            if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
-                                uniqueSet1.add(item1.substring(0, item1.length - 1))
-                            }
-                            else if (item1 !== "") {
-                                uniqueSet1.add(item1)
-                            }
-                        })
-                        uniqueArray = Array.from(uniqueSet1)
-                        let sortedData = uniqueArray.sort().join(' ')
-                        fs.writeFile('./' + 'updated' + item, sortedData, (error) => {
-                            if (error) {
-                                console.log(error)
-                            }
-                            else {
-                                fs.appendFile(filePath, "\n" + 'updated' + item, (error) => {
-                                    if (error) {
-                                        console.log(error)
-                                    }
-                                    if (index === array.length - 1) {
-                                        callback(filePath)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
+            let data3 = data.toString("utf-8").split(" ")
+            let uniqueData = new Set(data3)
+            let uniqueSet1 = new Set()
+            let uniqueArray = []
+            uniqueData.forEach((item1) => {
+                if (item1[item1.length - 1] === ',' || item1[item1.length - 1] === '.') {
+                    uniqueSet1.add(item1.substring(0, item1.length - 1))
+                }
+                else if (item1 !== "") {
+                    uniqueSet1.add(item1)
+                }
+            })
+            uniqueArray = Array.from(uniqueSet1)
+            let sortedData = uniqueArray.sort().join(' ')
+            fs.writeFile('./sortingFile.txt', sortedData, (error) => {
+                if (error) {
+                    console.log(error)
+                }
+                else {
+                    fs.appendFile('./filenames.txt', "\n" + 'sortingFile.txt', (error) => {
+                        if (error) {
+                            console.log(error)
+                        }
+                        else{
+                            callback('./filenames.txt')
+                        }
+                    })
+                }
             })
         }
     })
 }
-
-
-
 
 function deleteFiles(filePath) {
     fs.readFile(filePath, (error, data) => {
@@ -164,4 +151,4 @@ function deleteFiles(filePath) {
         }
     })
 }
-export { readFiles, convertUpperCase, convertLowerCase, readContents, deleteFiles }
+export { readFiles, convertUpperCase, convertLowerCase, sortContents, deleteFiles }

@@ -1,8 +1,8 @@
-import { readFiles, convertUpperCase, convertLowerCase, readContents, deleteFiles} from "../problem2.js";
+import { readFiles, convertUpperCase, convertLowerCase, sortContents, deleteFiles} from "../problem2.js";
 readFiles('lipsum.txt',(data)=>{
     convertUpperCase(data,(filePath)=>{
         convertLowerCase(filePath,(filePath)=>{
-            readContents(filePath,(filePath)=>{
+            sortContents(filePath,(filePath)=>{
                 deleteFiles(filePath)
             })
         })
